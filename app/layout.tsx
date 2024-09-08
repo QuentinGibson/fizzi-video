@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import localFont from "next/font/local";
 import Header from "@/app/components/Header";
+import ViewCanvas from "@/app/components/ViewCanvas";
 
-const alphino = localFont({
+const alpino = localFont({
   src: "./fonts/Alpino-Variable.woff2",
   display: "swap",
   weight: "100 900",
-  variable: "--font-alphino",
+  variable: "--font-alpino",
 });
 
 export const metadata: Metadata = {
@@ -22,12 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${alphino.variable} antialiased overflow-x-hidden bg-yellow-300`}
-      >
+    <html lang="en" className={alpino.variable}>
+      <body className={`antialiased overflow-x-hidden bg-yellow-300`}>
         <Header />
-        <main>{children}</main>
+        <main>
+          {children}
+          {/* <ViewCanvas /> */}
+        </main>
       </body>
     </html>
   );
