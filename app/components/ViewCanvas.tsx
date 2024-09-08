@@ -1,7 +1,7 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { SodaCan } from "./SodaCan";
+import { View } from "@react-three/drei";
 
 // type Props = {}
 
@@ -19,11 +19,10 @@ export default function ViewCanvas() {
       }}
       shadows
       dpr={[1, 1.5]}
-      gl={{ antialias: true}}
-      camera={{ fov: 100 }}
+      gl={{ antialias: true }}
+      camera={{ fov: 30 }}
     >
-      <SodaCan />
-      <spotLight intensity={4} position={[1, 1, 1]} />
+      <View.Port />
     </Canvas>
   );
 }
