@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"pnpm next:dev\" \"pnpm slicemachine\" --names \"next,slicemachine\" --prefix-colors blue,magenta ",
+    "next:dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,21 +14,30 @@
     "@prismicio/client": "^7.8.1",
     "@prismicio/next": "^1.6.0",
     "@prismicio/react": "^2.8.0",
+    "@react-three/drei": "^9.112.0",
+    "@react-three/fiber": "^8.17.7",
+    "@types/three": "^0.168.0",
     "clsx": "^2.1.1",
+    "gsap": "^3.12.5",
     "next": "14.2.8",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "three": "^0.168.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@slicemachine/adapter-next": "^0.3.49",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.8",
-    "postcss": "^8",
+    "postcss": "^8.4.45",
+    "r3f-perf": "^7.2.1",
     "slice-machine-ui": "^2.7.1",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5"
   }
 }
