@@ -52,6 +52,7 @@ const Scene = () => {
     gsap.set(can5Ref.current.position, { y: -5 });
 
     // Intro animation
+    if ((window.scrollY < 20)) {
     const introTl = gsap.timeline({
       defaults: {
         duration: 3,
@@ -65,6 +66,7 @@ const Scene = () => {
       .from(can2GroupRef.current.position, { y: 5, x: 1 }, 0)
       .from(can2GroupRef.current.rotation, { z: 3 }, 0);
 
+   }
     // Scroll animation
     const scrollTl = gsap.timeline({
       defaults: {
