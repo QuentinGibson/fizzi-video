@@ -1,12 +1,13 @@
 "use client"
 
 import FloatingCan from "@/app/components/FloatingCan"
-import { Environment, OrbitControls } from "@react-three/drei"
+import { Environment } from "@react-three/drei"
 import { useRef } from "react"
 import { Group } from "three"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useReadyStore } from "@/app/hooks/useStore"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -26,6 +27,9 @@ const Scene = () => {
 
   const FLOAT_SPEED = 1.5
 
+  const isReady = useReadyStore((state) => state.isReady)
+
+
   useGSAP(() => {
     // Check if all refs are defined
     if (
@@ -40,6 +44,7 @@ const Scene = () => {
     )
       return;
 
+    isReady()
     // Set can initial positions
     gsap.set(can1Ref.current.position, { x: -1.5 });
     gsap.set(can1Ref.current.rotation, { z: -0.5 });

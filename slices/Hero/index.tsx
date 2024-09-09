@@ -1,29 +1,36 @@
-  "use client";
-  import { Bounded } from "@/app/components/Bounded";
-  import Button from "@/app/components/Button";
-  import { asText, Content } from "@prismicio/client";
-  import { PrismicNextImage } from "@prismicio/next";
-  import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-  import { TextSplitter } from "@/slices/Hero/TextSplitter";
-  import gsap from "gsap";
-  import { useGSAP } from "@gsap/react";
-  import { ScrollTrigger } from "gsap/ScrollTrigger"
-  import { View } from "@react-three/drei";
-  import Scene from "@/slices/Hero/Scene"
-  import {Bubbles} from "@/slices/Hero/Bubbles"
+"use client";
+import { Bounded } from "@/app/components/Bounded";
+import Button from "@/app/components/Button";
+import { asText, Content } from "@prismicio/client";
+import { PrismicNextImage } from "@prismicio/next";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import { TextSplitter } from "@/slices/Hero/TextSplitter";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { View } from "@react-three/drei";
+import Scene from "@/slices/Hero/Scene";
+import { Bubbles } from "@/slices/Hero/Bubbles";
+import { useReadyStore } from "@/app/hooks/useStore";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
-  gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-  /**
-   * Props for `Hero`.
-   */
-  export type HeroProps = SliceComponentProps<Content.HeroSlice>;
+/**
+ * Props for `Hero`.
+ */
+export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
-  /**
-   * Component for "Hero" Slices.
-   */
-  const Hero = ({ slice }: HeroProps): JSX.Element => {
-    useGSAP(() => {
+/**
+ * Component for "Hero" Slices.
+ */
+const Hero = ({ slice }: HeroProps): JSX.Element => {
+  const ready = useReadyStore((state) => state.ready);
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
+
+  useGSAP(
+    () => {
+      if (!ready && isDesktop) return;
       const introTl = gsap.timeline();
 
       introTl
@@ -87,19 +94,23 @@
           y: 20,
           opacity: 0,
         });
-    })
+    },
+    { dependencies: [ready, isDesktop] },
+  );
 
-
-    return (
-      <Bounded
-        data-slice-type={slice.slice_type}
-        data-slice-variation={slice.variation}
-        className="hero opacity-0"
-      >
+  return (
+    <Bounded
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="hero opacity-0"
+    >
+      {isDesktop && (
         <View className="hero-scene pointer-events-none sticky top-0 z-[50] -mt-[100vh] hidden h-screen w-screen md:block">
           <Scene />
           <Bubbles />
-      </View>
+        </View>
+      )}
+
       <div className="grid">
         <div className="grid h-screen place-items-center">
           <div className="grid text-center auto-rows-min place-items-center">

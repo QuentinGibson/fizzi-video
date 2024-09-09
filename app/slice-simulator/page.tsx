@@ -13,8 +13,10 @@ export default function SliceSimulatorPage({
   const slices = getSlices(searchParams.state);
 
   return (
-    <SliceSimulator>
-      <SliceZone slices={slices} components={components} />
+    <SliceSimulator zIndex={10} background="">
+      <div className="max-h-[900px]">
+        <SliceZone slices={slices} components={components} />
+      </div>
     </SliceSimulator>
   );
 }
