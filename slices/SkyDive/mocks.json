@@ -1,0 +1,25 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"sentence": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Mollit aliquip enim dolore fugiat nisi voluptate velit voluptate laboris id dolor. Cillum do proident reprehenderit dolor deserunt aliqua deserunt commodo cupidatat anim et ea ipsum adipisicing dolor. Consequat proident duis non ex nostrud id dolore qui consectetur labore."
+						}
+					}
+				]
+			},
+			"flavor": {
+				"__TYPE__": "FieldContent",
+				"value": "watermelon",
+				"type": "Select"
+			}
+		},
+		"items": []
+	}
+]

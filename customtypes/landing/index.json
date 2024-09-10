@@ -6,11 +6,23 @@
   "status": true,
   "json": {
     "Main": {
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Title",
+          "placeholder": "",
+          "allowTargetBlank": false,
+          "single": "heading1"
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "sky_dive": {
+              "type": "SharedSlice"
+            },
             "alternating_text": {
               "type": "SharedSlice"
             },

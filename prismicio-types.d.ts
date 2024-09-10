@@ -5,6 +5,7 @@ import type * as prismic from "@prismicio/client";
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 type LandingDocumentDataSlicesSlice =
+  | SkyDiveSlice
   | AlternatingTextSlice
   | CarouselSlice
   | HeroSlice;
@@ -13,6 +14,17 @@ type LandingDocumentDataSlicesSlice =
  * Content for Landing documents
  */
 interface LandingDocumentData {
+  /**
+   * Title field in *Landing*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: landing.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  title: prismic.TitleField;
+
   /**
    * Slice Zone field in *Landing*
    *
@@ -246,6 +258,63 @@ type HeroSliceVariation = HeroSliceDefault;
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
+/**
+ * Primary content in *SkyDive → Default → Primary*
+ */
+export interface SkyDiveSliceDefaultPrimary {
+  /**
+   * Sentence field in *SkyDive → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sky_dive.default.primary.sentence
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  sentence: prismic.RichTextField;
+
+  /**
+   * Flavor field in *SkyDive → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sky_dive.default.primary.flavor
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  flavor: prismic.SelectField<
+    "lemonLime" | "grape" | "blackCherry" | "strawberryLemonade" | "watermelon"
+  >;
+}
+
+/**
+ * Default variation for SkyDive Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SkyDiveSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SkyDiveSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *SkyDive*
+ */
+type SkyDiveSliceVariation = SkyDiveSliceDefault;
+
+/**
+ * SkyDive Shared Slice
+ *
+ * - **API ID**: `sky_dive`
+ * - **Description**: SkyDive
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SkyDiveSlice = prismic.SharedSlice<
+  "sky_dive",
+  SkyDiveSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -270,6 +339,10 @@ declare module "@prismicio/client" {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      SkyDiveSlice,
+      SkyDiveSliceDefaultPrimary,
+      SkyDiveSliceVariation,
+      SkyDiveSliceDefault,
     };
   }
 }
