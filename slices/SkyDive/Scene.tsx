@@ -9,6 +9,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import { OrbitControls } from "@react-three/drei";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -32,7 +33,7 @@ const Scene = ({ sentence, flavor }: SkyDiveProps) => {
 
   const getXYPosition = (distance: number) => ({
     x: getXPosition(distance),
-    y: getYPosition(distance),
+    y: getYPosition(-1 * distance),
   });
 
   useGSAP(() => {
@@ -68,19 +69,19 @@ const Scene = ({ sentence, flavor }: SkyDiveProps) => {
     //Move clouds
     gsap.to(cloud1Ref.current.position, {
       y: `+=${getYPosition(DISTANCE * 2)}`,
-      x: `+=${getXPosition(DISTANCE * 2)}`,
+      x: `+=${getXPosition(DISTANCE * -2)}`,
       ease: "none",
       repeat: -1,
-      duration: DURATION
+      duration: DURATION,
     });
 
     gsap.to(cloud2Ref.current.position, {
       y: `+=${getYPosition(DISTANCE * 2)}`,
-      x: `+=${getXPosition(DISTANCE * 2)}`,
+      x: `+=${getXPosition(DISTANCE * -2)}`,
       ease: "none",
       repeat: -1,
       duration: DURATION,
-      delay: DURATION / 2
+      delay: DURATION / 2,
     });
 
     const scrollTl = gsap.timeline({
@@ -92,7 +93,32 @@ const Scene = ({ sentence, flavor }: SkyDiveProps) => {
         scrub: 1.5,
       },
     });
-    scrollTl.to("body", { backgroundColor: "#C0F0F5", overwrite: "auto", duration: 0.1 });
+    scrollTl
+      .to("body", {
+        backgroundColor: "#C0F0F5",
+        overwrite: "auto",
+        duration: 0.1,
+      })
+      .to(cloudsRef.current.position, { z: 0, duration: 0.3 }, 0)
+      .to(canRef.current.position, {
+        x: 0,
+        y: 0,
+        duration: 0.3,
+        ease: "back.out(1.7)",
+      })
+      .to(
+        wordsRef.current.children.map((word) => word.position),
+        {
+          keyframes: [{ x: 0, y: 0, z: -1 }, { ...getXYPosition(-7) }],
+          stagger: 0.3,
+        },
+        0,
+      )
+      .to(canRef.current.position, {
+        ...getXYPosition(4),
+        duration: 0.5,
+        ease: "back.in(1.7)",
+      });
   });
 
   return (
